@@ -33,7 +33,7 @@ export default class Search {
         // Handle Key press
         this.search_index_controller(config, myGameArea);
     
-        // Change UI according to them problem
+        // Change UI according to the problem
         this.changeUI(pivot, array, type);
     }
     
@@ -57,13 +57,16 @@ export default class Search {
     
     changeUI(pivot, array, type) {
         const c = this.config;
-    
+        
+        // If the user allow the animation to continue
         if (c.display) {
             c.count++;
+            // Run without waiting the break between items for the first time
             if (c.firstTime) {
                 c.firstTime = false;
                 c.i++;
             } else {
+                // Control the wait time between items
                 if (c.count % 70 === 0) {
                     c.count = 0;
                     this.move(pivot, array, type)
@@ -76,14 +79,16 @@ export default class Search {
         const c = this.config;
         const myGameArea = this.myGameArea;
 
+        // Terminate State
         if (type === "value" && array[c.i] === pivot) return;
         if (type === "index" && c.i === pivot) return;
         
-        // Boundary stop
+        // Boundary check
         if(c.i === 0 && myGameArea.prevKey === "ArrowLeft" 
         || c.i === c.size - 1 && myGameArea.prevKey === "ArrowRight")
             return;
-    
+        
+        // Move by 1 index (Left or Right)
         if (myGameArea.prevKey === "ArrowRight")
             c.i++;
         if (myGameArea.prevKey === "ArrowLeft")

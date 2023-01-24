@@ -5,15 +5,15 @@ function Controller() {
     const opearions = useRef(null);
     const open = useRef(null);
 
-    function handleClick(e) {
-        open.current.classList.toggle("open");
+    // function handleClick(e) {
+    //     open.current.classList.toggle("open");
+    //     const style = opearions.current.style;
 
-        const style = opearions.current.style;
-        if (style.display === "block")
-            style.display = "none";
-        else
-            style.display = "block";
-    }
+    //     if (style.display === "block")
+    //         style.display = "none";
+    //     else
+    //         style.display = "block";
+    // }
 
     return <section className="setting">
     <div className="setting-wrapper">

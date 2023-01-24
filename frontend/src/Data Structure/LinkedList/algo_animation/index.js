@@ -16,10 +16,6 @@ export default class Animation {
         this.config.size = array.length;
     }
 
-    setHistory(history) {
-        this.history = history;
-    }
-
     // Check Error & Flow for any related search algorithm
     search(params) {
         const {index, value} = params;

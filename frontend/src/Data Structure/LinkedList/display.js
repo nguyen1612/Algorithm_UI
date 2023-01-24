@@ -27,6 +27,7 @@ function Display() {
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
             },
         }
+
         function updateGameArea() {
             myGameArea.clear();
             nodeUI.update();
@@ -60,6 +61,7 @@ function Display() {
             node_init: init
         }
         
+        // Sample running animation
         const animation = new Animation(myGameArea, global_config);
         const array = [1, 50, 100, 40, 20, 43];
         animation.setArray(array);

@@ -32,6 +32,7 @@ export class Auto {
     control_node(i, text, under = false) {
         const init = this.config.node_init;
         const head = init.head;
+
         let x = head.x + head.width * i + head.width * 0.5 * i + init.thickness;
         let text_x = x + head.width * 0.6 - init.thickness;
         let text_y = init.y;
@@ -42,6 +43,7 @@ export class Auto {
 
         let rect_y = init.y;
 
+        // Change position either under or upper node (like Head, Tail, Current node)
         if (under) {
             rect_y = rect_y * 2 - 20;
             text_y *= 2;
@@ -67,35 +69,36 @@ export class Auto {
         d.draw_control_rectangle(x, head.y - 10, head.width, head.height, this.myGameArea, "white", init.thickness, true);
     }
 
-    continuos_animation(config) {
-        if (config.stop) {
-            if (config.wait) {
-                setTimeout(() => {
-                    config.stop = false;
-                    config.wait = true;
-                }, 1100)
-            }
-            config.wait = false;
-        }
-        if (!config.stop) {
-            const to_index = config.count / config.speed;
-            if (to_index < config.size) {
-                config.count++;
-                config.i = to_index;
-                if (Number.isInteger(config.i)) {
-                    config.stop = true;
-                }
-            }
-        }
-    }
+    // For testing only
+    // continuos_animation(config) {
+    //     if (config.stop) {
+    //         if (config.wait) {
+    //             setTimeout(() => {
+    //                 config.stop = false;
+    //                 config.wait = true;
+    //             }, 1100)
+    //         }
+    //         config.wait = false;
+    //     }
+    //     if (!config.stop) {
+    //         const to_index = config.count / config.speed;
+    //         if (to_index < config.size) {
+    //             config.count++;
+    //             config.i = to_index;
+    //             if (Number.isInteger(config.i)) {
+    //                 config.stop = true;
+    //             }
+    //         }
+    //     }
+    // }
 
-    segment_animation(config) {
-        config.count++;
-        if (config.count % 70 === 0) {
-            config.count = 0;
-            if (config.i < config.size - 1) {
-                config.i++;
-            }
-        }
-    }
+    // segment_animation(config) {
+    //     config.count++;
+    //     if (config.count % 70 === 0) {
+    //         config.count = 0;
+    //         if (config.i < config.size - 1) {
+    //             config.i++;
+    //         }
+    //     }
+    // }
 }
