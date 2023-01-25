@@ -1,4 +1,4 @@
-import * as d from './draw';
+import * as d from '../draw';
 
 export class Auto {
     constructor(myGameArea, config) {
@@ -7,12 +7,27 @@ export class Auto {
     }
 
     // Create Node UI
-    nodes(size) {
+    nodes(size, except=[], noPointer=[]) {
         const init = this.config.node_init;
 
         [... new Array(size)].forEach((_, i) => {
+            let customPointer = false;
             let x = init.x + init.width * i + init.width * 0.5 * i + init.thickness;
             let y = init.y;
+
+            if (except.includes(i))
+                return;
+            
+            if (noPointer.includes(i)) {
+                // let fromx = x + init.width * 0.85;
+                // let fromy = y + init.height * 0.5
+                // let tox = x + init.width + init.width * 0.5
+                // let toy = y - 20 - init.height * 0.5;
+
+                customPointer = true;
+                // d.draw_node_rectangle(x, y, init.width, init.height, this.myGameArea, "white", init.thickness, true);
+                // d.drawArrow(fromx, fromy, tox, toy, "white", this.myGameArea);
+            }
 
             // if (i === 2) {
             //     let fromx = x + init.width * 0.85;
@@ -25,7 +40,7 @@ export class Auto {
             // } 
 
             // Display node UI
-            return d.draw_node_rectangle(x, y, init.width, init.height, this.myGameArea, "white", init.thickness);
+            return d.draw_node_rectangle(x, y, init.width, init.height, this.myGameArea, "white", init.thickness, customPointer);
         })
     }
 
@@ -60,45 +75,12 @@ export class Auto {
         d.drawArrow(arrow_x, arrow_y, arrow_x, arrow_toY, "white", this.myGameArea);
     }
 
-    node(i) {
+    node(i, isCustomLine) {
         const init = this.config.node_init;
         const head = init.head;
         let x = head.x + head.width * i + head.width * 0.5 * i + init.thickness;
 
         // draw_node_rectangle(x, head.y, init.width, init.height, this.myGameArea, "white", init.thickness, init.thickness, true);
-        d.draw_control_rectangle(x, head.y - 10, head.width, head.height, this.myGameArea, "white", init.thickness, true);
+        d.draw_control_rectangle(x, head.y - 10, head.width, head.height, this.myGameArea, "white", init.thickness, isCustomLine);
     }
-
-    // For testing only
-    // continuos_animation(config) {
-    //     if (config.stop) {
-    //         if (config.wait) {
-    //             setTimeout(() => {
-    //                 config.stop = false;
-    //                 config.wait = true;
-    //             }, 1100)
-    //         }
-    //         config.wait = false;
-    //     }
-    //     if (!config.stop) {
-    //         const to_index = config.count / config.speed;
-    //         if (to_index < config.size) {
-    //             config.count++;
-    //             config.i = to_index;
-    //             if (Number.isInteger(config.i)) {
-    //                 config.stop = true;
-    //             }
-    //         }
-    //     }
-    // }
-
-    // segment_animation(config) {
-    //     config.count++;
-    //     if (config.count % 70 === 0) {
-    //         config.count = 0;
-    //         if (config.i < config.size - 1) {
-    //             config.i++;
-    //         }
-    //     }
-    // }
 }

@@ -1,4 +1,5 @@
 import {useRef, useState} from 'react';
+import * as type from "./algo_animation/TYPE";
 
 function Controller(props) {
     const {handleStart} = props
@@ -35,7 +36,7 @@ function Controller(props) {
 
 
 const init = {
-    params: {index: 3},
+    params: {type: type.INSERT_VALUE, index: 2, value: 10, array: [30, 40, 20, 10, 100, 22, 11]},
     node_init: {
         x: 5, y: 75, width: 70, height: 40, thickness: 5,
         head: {
@@ -45,8 +46,6 @@ const init = {
     UI: {
         count: 0,
         i: 0,
-        size: 6,
-        speed: 50,
 
         display: false,
         firstTime: true,

@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import Display from "./display"
+import Display from "../display"
 import Controller from './controller'
 
 
@@ -19,7 +19,7 @@ function Index() {
             </div>
 
             <div className="controller_speed">
-                <button className="btn-1">{"<"}</button>
+                {/* <button className="btn-1">{"<"}</button> */}
                 <button className="btn-1">||</button>
                 <button className="btn-1">{">"}</button>
             </div>

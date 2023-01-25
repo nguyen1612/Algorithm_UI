@@ -1,6 +1,8 @@
 export function draw_control_rectangle(x, y, width, height, myGameArea, color="black", thickness = 1, isCustomLine) {
-    draw_node_rectangle(...arguments);
-
+    draw_node_rectangle(x, y, width, height, myGameArea, color, thickness, true);
+    
+    if (isCustomLine)
+        return;
     let fromx = x + width * 0.85;
     let fromy = y + height * 0.5;
     let tox = x + width + width * 0.5;

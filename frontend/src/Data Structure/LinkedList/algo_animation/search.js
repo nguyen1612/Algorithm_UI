@@ -1,5 +1,5 @@
 import { Auto } from "../auto_draw";
-import * as d from "../draw";
+import * as d from "../../draw";
 
 export default class Search {
     constructor(myGameArea, config) {
@@ -8,7 +8,7 @@ export default class Search {
         this.auto_draw = new Auto(myGameArea, config);
 
         // test
-        this.result = [0, 1, 2, 3];
+        this.result = null;
         this.i = 0;
     }
 
@@ -19,17 +19,17 @@ export default class Search {
         const auto_draw = this.auto_draw;
         
         // For all nodes
-        auto_draw.nodes(config.size);
+        auto_draw.nodes(array.length);
     
         // For NULL pointer
-        let x = init.x + init.width * config.size + init.width * 0.5 * config.size + init.thickness;
+        let x = init.x + init.width * array.length + init.width * 0.5 * array.length + init.thickness;
         d.drawText(x + 30, init.y + init.height * 0.725, "NULL", "20px Arial", "#F4468E", myGameArea)
     
         // For Head pointer
         auto_draw.control_node(0, "Head");
     
         // For Tail pointer
-        auto_draw.control_node(config.size - 1, "Tail");
+        auto_draw.control_node(array.length - 1, "Tail");
     
         // For current running node
         auto_draw.control_node(config.i, "Current", true);

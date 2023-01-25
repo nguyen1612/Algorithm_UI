@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
-import Animation from './algo_animation/index.js';
-import LinkedList from './algo_animation/linkedlist.js';
+import LinkedList from './LinkedList/algo_animation/linkedlist.js';
 
 function Display(props) {
     let {config} = props;
@@ -45,39 +44,10 @@ function Display(props) {
     }, [config])
     
     function display(myGameArea) {
-        // // Starting || Default Node config
-        // const init = {
-        //     x: 5, y: 75, width: 70, height: 40, thickness: 5,
-        //     head: {
-        //         x: 5, y: 25, width: 70, height: 40, thickness: 5,
-        //     }
-        // }
-        // const global_config = {
-        //     count: 0,
-        //     i: 0,
-        //     size: 6,
-        //     speed: 50,
-
-        //     display: false,
-        //     firstTime: true,
-        //     previous: false,
-        //     stop: false,
-        //     wait: true,
-
-        //     node_init: init
-        // }   
-
-        // // Sample running animation
-        // // const array = [1, 50, 100, 40, 20, 43];
-        // const params = {index: 3, array};
-
         const algorithm = algorithm_factory("LinkedList", {myGameArea, config});
-
-        // const animation = new Animation(algorithm);
 
         this.update = function() {
             algorithm.render();
-            // animation.render();
         }
     }
 
