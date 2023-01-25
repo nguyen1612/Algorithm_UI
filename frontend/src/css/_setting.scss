@@ -1,7 +1,9 @@
 .display {
     display: flex;
     flex-direction: column;
-    gap: 15px
+    width: 100%;
+    padding: 15px;
+    gap: 10px;
 }
 
 .controller_speed {
@@ -17,7 +19,7 @@
 }
 
 .setting {
-    width: 350px;
+    min-width: 350px;
     padding: 10px;
     background-color: #F6F8FA;
 

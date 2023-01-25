@@ -1,6 +1,17 @@
+import {useState} from 'react';
+
 import Display from "./display"
+import Controller from './controller'
+
 
 function Index() {
+
+    const [data, setData] = useState({});
+
+    function handleStart(settings) {
+        setData(settings)
+    }
+
     return <div className='home-section'>
         <main className="display">
             <div className="txt-center">
@@ -14,9 +25,10 @@ function Index() {
             </div>
 
             <canvas id="myCanvas" width="800" height="500">
-                <Display/>
+                <Display config={data}/>
             </canvas>
         </main>
+        <Controller handleStart={handleStart}/>
     </div>
 }
 

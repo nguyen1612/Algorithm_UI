@@ -1,32 +1,28 @@
-import Search from "./search";
 import { Auto } from "../auto_draw";
 
 export default class Animation {
-    constructor(myGameArea, config) {
-        this.myGameArea = myGameArea;
-        this.config = config;
-        this.auto_draw = new Auto(myGameArea, config);
-        this.array = null;
+    constructor(state) {
+        this.params = state.config.params;
+        this.myGameArea = state.myGameArea;
+        this.config = {...state.config.UI, node_init: {...state.config.node_init}};
+        this.auto_draw = new Auto(state.myGameArea, state.config);
+
+        this.problem = this.getProblem();
     }
 
-    setArray(array) {
-        // Need to detect array size
-        //
-        this.array = array;
-        this.config.size = array.length;
+    // Child class must overwrite this method 
+    // depending on the requirement for displaying a particular animation.
+    // => Must return the drawing function with REFERENCE type.
+    // Ex: this.search, this.delete, etc.
+    _getProblem() {
+        // At the time child class call this function, only this.params is available 
     }
 
-    // Check Error & Flow for any related search algorithm
-    search(params) {
-        const {index, value} = params;
-        
-        if (index && value)
-            throw Error("Cannot display animation for both finding index and value");
-        
-        const search = new Search(this.myGameArea, this.config);
-        if (value !== undefined)
-            return search.search(value, this.array, "value");
-        if (index !== undefined)
-            return search.search(index, this.array, "index");
+    _setAnimationState(state) {
+        this.state = state;
+    }
+
+    render() {
+        this.problem();
     }
 }

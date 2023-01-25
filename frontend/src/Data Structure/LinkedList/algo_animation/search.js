@@ -6,6 +6,10 @@ export default class Search {
         this.myGameArea = myGameArea;
         this.config = config;
         this.auto_draw = new Auto(myGameArea, config);
+
+        // test
+        this.result = [0, 1, 2, 3];
+        this.i = 0;
     }
 
     search(pivot, array, type) {
@@ -30,14 +34,14 @@ export default class Search {
         // For current running node
         auto_draw.control_node(config.i, "Current", true);
     
-        // Handle Key press
-        this.search_index_controller(config, myGameArea);
+        // Handle user's key press
+        this.controller(config, myGameArea);
     
         // Change UI according to the problem
         this.changeUI(pivot, array, type);
     }
     
-    search_index_controller(config, myGameArea) {
+    controller(config, myGameArea) {
         const key = myGameArea.key;
         if (key === "ArrowRight") {
             myGameArea.setKey(false, key);
@@ -64,7 +68,7 @@ export default class Search {
             // Run without waiting the break between items for the first time
             if (c.firstTime) {
                 c.firstTime = false;
-                c.i++;
+                this._update(this.i + 1, c);
             } else {
                 // Control the wait time between items
                 if (c.count % 70 === 0) {
@@ -89,9 +93,16 @@ export default class Search {
             return;
         
         // Move by 1 index (Left or Right)
-        if (myGameArea.prevKey === "ArrowRight")
-            c.i++;
-        if (myGameArea.prevKey === "ArrowLeft")
-            c.i--;
+        if (myGameArea.prevKey === "ArrowRight") {
+            this._update(this.i + 1, c);
+        }
+        if (myGameArea.prevKey === "ArrowLeft") {
+            this._update(this.i - 1, c);
+        }
+    }
+
+    _update(i, config) {
+        this.i = i;
+        config.i = this.result[this.i];
     }
 }

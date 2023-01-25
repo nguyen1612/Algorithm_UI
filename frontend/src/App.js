@@ -8,7 +8,7 @@ function App() {
     return <main className="container">
         <Nav/>
         <LinkedList/>
-        <Controller/>
+        {/* <Controller/> */}
     </main>
 }
 

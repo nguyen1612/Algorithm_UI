@@ -254,7 +254,10 @@ canvas {
 }
 
 .home-section{
-    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    // margin: 0 auto;
     transition: all 0.5s ease;
 }
 // .sidebar.open ~ .home-section{
