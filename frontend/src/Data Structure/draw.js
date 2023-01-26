@@ -1,5 +1,5 @@
-export function draw_control_rectangle(x, y, width, height, myGameArea, color="black", thickness = 1, isCustomLine) {
-    draw_node_rectangle(x, y, width, height, myGameArea, color, thickness, true);
+export function draw_control_rectangle(x, y, width, height, value, myGameArea, color="black", thickness = 1, isCustomLine) {
+    draw_node_rectangle(x, y, width, height, value, myGameArea, color, thickness, true);
     
     if (isCustomLine)
         return;
@@ -34,7 +34,7 @@ export function draw_rectangle(x, y, width, height, myGameArea) {
     ctx.fillRect(x, y, width, height);
 }
 
-export function draw_node_rectangle(x, y, width, height, myGameArea, color="black", thickness = 1, isCustomLine) {
+export function draw_node_rectangle(x, y, width, height, value, myGameArea, color="black", thickness = 1, isCustomLine) {
     let ctx = myGameArea.context;
     ctx.save();
 
@@ -64,7 +64,7 @@ export function draw_node_rectangle(x, y, width, height, myGameArea, color="blac
     ctx.font = "14px Arial";
     ctx.fillStyle='black';
     ctx.textAlign = 'center';
-    ctx.fillText("500", x + width * 0.35, y + height * 0.65);
+    ctx.fillText(value, x + width * 0.35, y + height * 0.65);
 
     ctx.restore();
 }

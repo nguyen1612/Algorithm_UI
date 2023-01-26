@@ -1,3 +1,4 @@
+// This class use for render specific problem globally 
 export default class Animation {
     constructor(state) {
         this.params = state.config.params;

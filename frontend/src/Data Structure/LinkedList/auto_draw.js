@@ -7,49 +7,49 @@ export class Auto {
     }
 
     // Create Node UI
-    nodes(size, except=[], noPointer=[]) {
+    nodes(array, shift={from: 0, n: 0}, noPointer=[]) {
         const init = this.config.node_init;
 
-        [... new Array(size)].forEach((_, i) => {
+        array.forEach((value, i) => {
             let customPointer = false;
-            let x = init.x + init.width * i + init.width * 0.5 * i + init.thickness;
+            let block = init.x + init.width;
+            let pointer = init.width * 0.5;
+
+            if (i >= shift.from && shift.from !== 0)
+                i += shift.n;
+
+            let x = block * i + pointer * i + init.thickness;
             let y = init.y;
 
-            if (except.includes(i))
-                return;
-            
-            if (noPointer.includes(i)) {
-                // let fromx = x + init.width * 0.85;
-                // let fromy = y + init.height * 0.5
-                // let tox = x + init.width + init.width * 0.5
-                // let toy = y - 20 - init.height * 0.5;
-
+            if (noPointer.includes(i))
+                return d.draw_node_rectangle(x, y, init.width, init.height, value,  this.myGameArea, "white", init.thickness, true);
+        
+            if (i === shift.from - 1)
                 customPointer = true;
-                // d.draw_node_rectangle(x, y, init.width, init.height, this.myGameArea, "white", init.thickness, true);
-                // d.drawArrow(fromx, fromy, tox, toy, "white", this.myGameArea);
+
+            d.draw_node_rectangle(x, y, init.width, init.height, value,  this.myGameArea, "white", init.thickness, customPointer);
+        
+            if (i === shift.from - 1) {
+                let fromx = x + init.width * .85;
+                let fromy = y + init.height * .5
+                let tox = x + init.width * 3 + init.thickness;
+                let toy = y + init.height * .5;
+                d.drawArrow(fromx, fromy, tox, toy, "white", this.myGameArea);
             }
-
-            // if (i === 2) {
-            //     let fromx = x + init.width * 0.85;
-            //     let fromy = y + init.height * 0.5
-            //     let tox = x + init.width + init.width * 0.5
-            //     let toy = y - 20 - init.height * 0.5;
-
-            //     d.draw_node_rectangle(x, y, init.width, init.height, this.myGameArea, "white", init.thickness, true);
-            //     return d.drawArrow(fromx, fromy, tox, toy, "white", this.myGameArea);
-            // } 
-
-            // Display node UI
-            return d.draw_node_rectangle(x, y, init.width, init.height, this.myGameArea, "white", init.thickness, customPointer);
         })
     }
 
-    control_node(i, text, under = false) {
+    control_node(i=0, shift={from: 0, n: 0}, text="NULL", under = false) {
         const init = this.config.node_init;
         const head = init.head;
+        let block = head.x + head.width;
+        let pointer = head.width * 0.5;
 
-        let x = head.x + head.width * i + head.width * 0.5 * i + init.thickness;
-        let text_x = x + head.width * 0.6 - init.thickness;
+        if (i >= shift.from && shift.from !== 0)
+            i += shift.n;
+
+        let x = block * i + pointer * i + init.thickness;
+        let text_x = x + head.width * 0.55 - init.thickness;
         let text_y = init.y;
 
         let arrow_x = text_x;
@@ -75,12 +75,11 @@ export class Auto {
         d.drawArrow(arrow_x, arrow_y, arrow_x, arrow_toY, "white", this.myGameArea);
     }
 
-    node(i, isCustomLine) {
+    node(i, value, isCustomLine) {
         const init = this.config.node_init;
         const head = init.head;
-        let x = head.x + head.width * i + head.width * 0.5 * i + init.thickness;
+        let x = (head.x + head.width) * i + head.width * 0.5 * i + init.thickness;
 
-        // draw_node_rectangle(x, head.y, init.width, init.height, this.myGameArea, "white", init.thickness, init.thickness, true);
-        d.draw_control_rectangle(x, head.y - 10, head.width, head.height, this.myGameArea, "white", init.thickness, isCustomLine);
+        d.draw_control_rectangle(x, head.y - 10, head.width, head.height, value, this.myGameArea, "white", init.thickness, isCustomLine);
     }
 }
