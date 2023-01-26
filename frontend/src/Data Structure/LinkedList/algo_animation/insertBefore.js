@@ -1,22 +1,17 @@
 import { Auto } from "../auto_draw";
 import * as d from "../../draw";
-import Controller from '../../controller'
+import Controller from "../../controller";
 
-export default class InsertAfter extends Controller {
+export class InsertBefore extends Controller {
     constructor(myGameArea, config) {
         super(myGameArea, config);
-
         this.auto_draw = new Auto(myGameArea, config);
 
-        // Custom
         this.noShift = {from: 0, n: 0};
         this.shiftRight = this.noShift;
+        this.currentShiftRight = this.noShift;
+
         this.firstTime = true;
-
-        this.last_int = 0;
-        this.pointer = -1;
-
-        // UI render
         this.fixedUI = 5;
         this.log = this.getLog();
     }
@@ -30,7 +25,8 @@ export default class InsertAfter extends Controller {
 
         // Normal UI flow, may change later
         auto_draw.nodes(array, this.shiftRight, [this.pointer]);
-        auto_draw.control_node(c.i, this.noShift, "Current", true);
+        auto_draw.control_node(c.i, this.currentShiftRight, "Current", true);
+        auto_draw.control_node(c.i - 1, this.noShift, "Previous", true);
         auto_draw.control_node(0, this.noShift, "Tail");
         auto_draw.control_node(tail, this.shiftRight, "Tail");
 
@@ -44,18 +40,17 @@ export default class InsertAfter extends Controller {
         d.drawText(x + 30, init.y + init.height * 0.725, "NULL", "20px Arial", "#F4468E", this.myGameArea)
 
         this._controller();
-        // this.changeUI(c);
-
         this.render();
     }
 
     render() {
         if (!Number.isInteger(this.path[this.i])) {
-            this.once(this.config, "firstTime", () => this.last_int = this.i - 1);
+            this.once(this.config, "firstTime", () => this.last_int = this.i - 2);
             
             for (let i = 0; i < this.fixedUI; i++)
-                if (this.i - 1 >= i + this.last_int)
+                if (this.i - 1 >= i + this.last_int + 1) {
                     this.log[i](this);
+                }
         }
 
         if(!this.config.display)
@@ -66,11 +61,12 @@ export default class InsertAfter extends Controller {
 
     getLog() {
         const init = this.config.node_init;
-        const log = []
+        const log = [];
 
-        log[0] = function (thiss) {
+        log[0] = (thiss) => {
             thiss.auto_draw.node(thiss.last_int + 1, thiss.params.value, true);
             thiss.shiftRight = {from: thiss.last_int + 1, n: 1};
+            thiss.currentShiftRight = thiss.shiftRight;
         }
 
         log[1] = function(thiss) {
@@ -120,7 +116,7 @@ export default class InsertAfter extends Controller {
             return fnc1();
         }
     }
-
+    
     getXY(i, start) {
         let block = start.x + start.width;
         let pointer = start.width * 0.5;

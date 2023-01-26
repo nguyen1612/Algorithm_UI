@@ -36,7 +36,7 @@ function Controller(props) {
 
 
 const init = {
-    params: {type: type.INSERT_VALUE, index: 2, value: 10, array: [30, 40, 20, 10, 100]},
+    params: {type: type.INSERT_BEFORE, index: 4, value: 40, array: [30, 33, 20, 15, 10, 100]},
     node_init: {
         x: 5, y: 75, width: 70, height: 40, thickness: 5,
         head: {

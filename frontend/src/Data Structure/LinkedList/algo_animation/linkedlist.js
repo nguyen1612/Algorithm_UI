@@ -4,6 +4,7 @@ import { Auto } from "../auto_draw";
 import * as type from './TYPE';
 import * as api from './API';
 import InsertAfter from "./insertAfter";
+import { InsertBefore } from "./insertBefore";
 
 
 // This class is only use for error checking and directing algorithm
@@ -16,7 +17,8 @@ export default class LinkedList extends Animation {
     // for directing animation for specific problem and init value;
     _getProblem() {
         this.searchAlgo = new Search(this.myGameArea, this.config);
-        this.insertAlgo = new InsertAfter(this.myGameArea, this.config);
+        this.insertAfter = new InsertAfter(this.myGameArea, this.config);
+        this.insertBefore = new InsertBefore(this.myGameArea, this.config);
 
         if (this.params?.type === type.SEARCH_INDEX) {
             this.searchAlgo.path = api.searchIndex();
@@ -30,10 +32,16 @@ export default class LinkedList extends Animation {
             return this.search_value;
         }
 
-        if (this.params?.type === type.INSERT_VALUE) {
-            this.insertAlgo.path = api.insertValue({array: this.params.array});
-            this.insertAlgo.params = this.params;
+        if (this.params?.type === type.INSERT_AFTER) {
+            this.insertAfter.path = api.insertAfter({array: this.params.array});
+            this.insertAfter.params = this.params;
             return this.insert_after;
+        }
+
+        if (this.params?.type === type.INSERT_BEFORE) {
+            this.insertBefore.path = api.insertBefore({array: this.params.array});
+            this.insertBefore.params = this.params;
+            return this.insert_before;
         }
 
         return () => {};
@@ -64,7 +72,15 @@ export default class LinkedList extends Animation {
         if (!p.value || !p.index)
             throw Error("Must provide (value, index) data");
 
-        return this.insertAlgo.insert();
+        return this.insertAfter.insert();
+    }
+
+    insert_before() {
+        const p = this.params;
+        if (!p.value || !p.index)
+            throw Error("Must provide (value, index) data");
+
+        return this.insertBefore.insert();
     }
 
     delete() {
