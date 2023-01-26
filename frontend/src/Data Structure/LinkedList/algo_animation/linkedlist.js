@@ -5,6 +5,7 @@ import * as type from './TYPE';
 import * as api from './API';
 import InsertAfter from "./insertAfter";
 import { InsertBefore } from "./insertBefore";
+import Test from "./test";
 
 
 // This class is only use for error checking and directing algorithm
@@ -19,6 +20,7 @@ export default class LinkedList extends Animation {
         this.searchAlgo = new Search(this.myGameArea, this.config);
         this.insertAfter = new InsertAfter(this.myGameArea, this.config);
         this.insertBefore = new InsertBefore(this.myGameArea, this.config);
+        this.testObj = new Test(this.myGameArea, this.config);
 
         if (this.params?.type === type.SEARCH_INDEX) {
             this.searchAlgo.path = api.searchIndex();
@@ -42,6 +44,12 @@ export default class LinkedList extends Animation {
             this.insertBefore.path = api.insertBefore({array: this.params.array});
             this.insertBefore.params = this.params;
             return this.insert_before;
+        }
+
+        if (this.params?.type === type.TEST) {
+            this.testObj.path = api.test({array: this.params.array});
+            this.testObj.params = this.params;
+            return this.test;
         }
 
         return () => {};
@@ -81,6 +89,10 @@ export default class LinkedList extends Animation {
             throw Error("Must provide (value, index) data");
 
         return this.insertBefore.insert();
+    }
+
+    test() {
+        return this.testObj.test();
     }
 
     delete() {

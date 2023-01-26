@@ -21,3 +21,10 @@ export function insertBefore(params) {
     // [30, 40, 20, 10, 100, 22]
     return [0, 1, 'new top', 'new to prev.next', "prev to nothing", 'prev to new', "new normal"];
 }
+
+export function test(params) {
+    const {array} = params;
+    
+    // [30, 40, 20, 10, 100, 22]
+    return [0, 1, 2, 'new top', 'new to prev.next', "prev to nothing", 'prev to new', "new normal"];
+}
