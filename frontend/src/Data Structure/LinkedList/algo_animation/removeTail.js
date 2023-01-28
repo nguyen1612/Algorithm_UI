@@ -2,7 +2,7 @@ import { Auto } from "../auto_draw";
 import * as d from "../../draw";
 import Controller from '../../controller'
 
-export default class RemoveHead extends Controller {
+export default class RemoveTail extends Controller {
     constructor(myGameArea, config) {
         super(myGameArea, config);
 
@@ -17,6 +17,7 @@ export default class RemoveHead extends Controller {
         this.tail = null;
         this.noPointers = [];
         this.noNodes = [];
+        this.lastPointer = true;
         this.removeTail = true;
 
         // UI render

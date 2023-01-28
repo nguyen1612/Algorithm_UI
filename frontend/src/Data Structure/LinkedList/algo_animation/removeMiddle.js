@@ -2,7 +2,7 @@ import { Auto } from "../auto_draw";
 import * as d from "../../draw";
 import Controller from '../../controller'
 
-export default class Remove extends Controller {
+export default class RemoveMiddle extends Controller {
     constructor(myGameArea, config) {
         super(myGameArea, config);
 
@@ -34,7 +34,7 @@ export default class Remove extends Controller {
         // Normal UI flow, may change later
         auto_draw.nodes(array, this.shiftRight, this.pointers, this.noNodes);
         auto_draw.control_node(c.i - 1, this.noShift, "Previous", true);
-        auto_draw.control_node(0, this.noShift, "Tail");
+        auto_draw.control_node(0, this.noShift, "Head");
         auto_draw.control_node(tail, this.shiftRight, "Tail");
         
         if (this.under_1)
@@ -44,8 +44,6 @@ export default class Remove extends Controller {
         let pointer = init.width * 0.5 ;
         let block = init.x + init.width;
         let i = array.length;
-        if (i >= this.shiftRight.from && this.shiftRight.from !== 0)
-            i += this.shiftRight.n;
         let x = block * i + pointer * i + init.thickness;
         d.drawText(x + 30, init.y + init.height * 0.725, "NULL", "20px Arial", "#F4468E", this.myGameArea);
 

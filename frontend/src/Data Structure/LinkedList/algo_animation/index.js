@@ -1,13 +1,14 @@
 import Search from "./search";
 import Animation from "../../animation";
-import { Auto } from "../auto_draw";
 import * as type from './TYPE';
 import * as api from './API';
 
 import InsertAfter from "./insertAfter";
 import InsertBefore from "./insertBefore";
-import Remove from "./remove";
+import RemoveMiddle from "./removeMiddle";
+import RemoveHead from "./removeHead";
 import Test from "./test";
+import RemoveTail from "./removeTail";
 
 
 // This class is only use for error checking and directing algorithm
@@ -19,26 +20,21 @@ export default class LinkedList extends Animation {
     // This function is called from the constructor of the parent class
     // for directing animation for specific problem and init value;
     _getProblem() {
-        this.searchAlgo = new Search(this.myGameArea, this.config);
+        this.searchPivot = new Search(this.myGameArea, this.config);
         this.insertAfter = new InsertAfter(this.myGameArea, this.config);
         this.insertBefore = new InsertBefore(this.myGameArea, this.config);
-        this.removeItem = new Remove(this.myGameArea, this.config);
+        this.removeMiddle = new RemoveMiddle(this.myGameArea, this.config);
+        this.removeHead = new RemoveHead(this.myGameArea, this.config);
+        this.removeTail = new RemoveTail(this.myGameArea, this.config);
 
         this.testObj = new Test(this.myGameArea, this.config);
 
 
-        // Search index
-        if (this.params?.type === type.SEARCH_INDEX) {
-            this.searchAlgo.path = api.searchIndex();
-            this.searchAlgo.params = this.params;
-            return this.search_index;
-        }
-
-        // Search value
-        if (this.params?.type === type.SEARCH_VALUE) {
-            this.searchAlgo.path = api.searchValue();
-            this.searchAlgo.params = this.params;
-            return this.search_value;
+        // Search Pivot
+        if (this.params?.type === type.SEARCH_PIVOT) {
+            this.searchPivot.path = api.searchPivot();
+            this.searchPivot.params = this.params;
+            return this.search_pivot;
         }
 
         // Insert After
@@ -55,11 +51,25 @@ export default class LinkedList extends Animation {
             return this.insert_before;
         }
 
-        // Delete Item
-        if (this.params?.type === type.REMOVE_ITEM) {
-            this.removeItem.path = api.deleteItem({array: this.params.array});
-            this.removeItem.params = this.params;
-            return this.remove;
+        // Remove Head
+        if (this.params?.type === type.REMOVE_HEAD) {
+            this.removeHead.path = api.removeHead({array: this.params.array});
+            this.removeHead.params = this.params;
+            return this.remove_head;
+        }
+
+        // Remove Middle
+        if (this.params?.type === type.REMOVE_MIDDLE) {
+            this.removeMiddle.path = api.removeMiddle({array: this.params.array});
+            this.removeMiddle.params = this.params;
+            return this.remove_middle;
+        }
+
+        // Remove Tail
+        if (this.params?.type === type.REMOVE_TAIL) {
+            this.removeTail.path = api.removeTail({array: this.params.array});
+            this.removeTail.params = this.params;
+            return this.remove_tail;
         }
 
         // Test Class
@@ -73,26 +83,27 @@ export default class LinkedList extends Animation {
     }
 
     test() {
-        return this.testObj.test();
+        return this.testObj.render();
     }
 
-    search_index() {
-        return this.searchAlgo.render();
-    }
-
-    search_value() {
-        return this.searchAlgo.render();
+    search_pivot() {
+        return this.searchPivot.render();
     }
 
     insert_after() {
         return this.insertAfter.render();
     }
-
     insert_before() {
         return this.insertBefore.render();
     }
 
-    remove() {
-        return this.removeItem.render();
+    remove_head() {
+        return this.removeHead.render();
+    }
+    remove_middle() {
+        return this.removeMiddle.render();
+    }
+    remove_tail() {
+        return this.removeTail.render();
     }
 }

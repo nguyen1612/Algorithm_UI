@@ -14,10 +14,9 @@ export default class RemoveHead extends Controller {
         this.firstTime = true;
 
         this.last_int = 0;
-        this.tail = null;
+        this.head = 0;
         this.noPointers = [];
         this.noNodes = [];
-        this.removeTail = true;
 
         // UI render
         this.fixedUI = 3;
@@ -29,15 +28,12 @@ export default class RemoveHead extends Controller {
         const c = this.config;
         const auto_draw = this.auto_draw;
         const init = c.node_init;
-        
-        this.once(this, "firstTime", () => this.tail = array.length - 1)
-       
+        const tail = array.length - 1;
 
         // Normal UI flow, may change later
         auto_draw.nodes(array, this.shiftRight, this.noPointers, this.noNodes);
-        auto_draw.control_node(0, this.noShift, "Head");
-        auto_draw.control_node(c.i, this.noShift, "Current", true);
-        auto_draw.control_node(this.tail, this.shiftRight, "Tail");
+        auto_draw.control_node(this.head, this.noShift, "Head");
+        auto_draw.control_node(tail, this.shiftRight, "Tail");
         
         // For NULL pointer
         let pointer = init.width * 0.5 ;
@@ -68,19 +64,15 @@ export default class RemoveHead extends Controller {
         const log = [];
 
         log[0] = () => {
-            this.tail = this.last_int;
+            this.head = 1;
         }
 
         log[1] = () => {
-            this.once(this, "lastPointer", ()=> this.noPointers.push(this.last_int))
+            this.noPointers.push(0);
         }
 
         log[2] = () => {
-            this.once(this, "removeTail", () => {
-                const array = this.params.array;
-                this.params.array = array.slice(0, array.length - 1)
-                this.noPointers = [];
-            })
+            this.noNodes.push(0);
         }
 
         return log;
