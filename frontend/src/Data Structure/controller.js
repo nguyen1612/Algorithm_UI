@@ -60,4 +60,26 @@ export default class Controller {
         if (Number.isInteger(this.path[index]))  
             this.config.i = this.path[index]; 
     }
+
+
+    // Useful function
+    once(obj, name="firstTime", fnc1) {
+        if (obj[name]) {
+            obj[name] = false;
+            return fnc1();
+        }
+    }
+    getXY(i, start) {
+        let block = start.x + start.width;
+        let pointer = start.width * 0.5;
+
+        let x = block * i + pointer * i + start.thickness;
+        let y = start.y;
+        return {x, y};
+    }
+    getPointerXY(x, y, len) {
+        x = x + len.width * .85;
+        y = y + len.height / 2;
+        return {x, y};
+    }
 }

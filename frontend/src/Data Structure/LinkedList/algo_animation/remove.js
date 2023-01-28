@@ -2,7 +2,7 @@ import { Auto } from "../auto_draw";
 import * as d from "../../draw";
 import Controller from '../../controller'
 
-export default class Test extends Controller {
+export default class Remove extends Controller {
     constructor(myGameArea, config) {
         super(myGameArea, config);
 
@@ -24,7 +24,7 @@ export default class Test extends Controller {
         this.log = this.getLog();
     }
 
-    test() {
+    render() {
         const array = this.params.array;
         const c = this.config;
         const auto_draw = this.auto_draw;
@@ -49,10 +49,11 @@ export default class Test extends Controller {
         let x = block * i + pointer * i + init.thickness;
         d.drawText(x + 30, init.y + init.height * 0.725, "NULL", "20px Arial", "#F4468E", this.myGameArea);
 
-        this.render();
+        this._controller();
+        this.effects();
     }
 
-    render() {
+    effects() {
         if (!Number.isInteger(this.path[this.i])) {
             this.once(this.config, "firstTime", () => this.last_int = this.i - 1);
             

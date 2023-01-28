@@ -2,7 +2,7 @@ import { Auto } from "../auto_draw";
 import * as d from "../../draw";
 import Controller from "../../controller";
 
-export class InsertBefore extends Controller {
+export default class InsertBefore extends Controller {
     constructor(myGameArea, config) {
         super(myGameArea, config);
         this.auto_draw = new Auto(myGameArea, config);
@@ -16,7 +16,7 @@ export class InsertBefore extends Controller {
         this.log = this.getLog();
     }
 
-    insert() {
+    render() {
         const array = this.params.array;
         const c = this.config;
         const auto_draw = this.auto_draw;
@@ -40,10 +40,10 @@ export class InsertBefore extends Controller {
         d.drawText(x + 30, init.y + init.height * 0.725, "NULL", "20px Arial", "#F4468E", this.myGameArea)
 
         this._controller();
-        this.render();
+        this.effects();
     }
 
-    render() {
+    effects() {
         if (!Number.isInteger(this.path[this.i])) {
             this.once(this.config, "firstTime", () => this.last_int = this.i - 2);
             
@@ -74,12 +74,12 @@ export class InsertBefore extends Controller {
             const head = init.head;
 
             let {x: fromx, y: fromy} = thiss.getXY(thiss.last_int + 1, head);
-            fromx = fromx + init.width * .85
-            fromy = fromy - 10 + init.height / 2;
+            fromx += init.width * .85
+            fromy += init.height / 2 - 10;
 
             let {x: tox, y: toy} = thiss.getXY(i, head);
             tox -= init.thickness
-            toy = toy - 10 + 60 + toy - init.thickness;
+            toy += toy - init.thickness - 10 + 60;
 
             d.drawArrow(fromx, fromy, tox, toy, "white", thiss.myGameArea);
         }
@@ -89,11 +89,10 @@ export class InsertBefore extends Controller {
         }
 
         log[3] = function(thiss) {
-            let x = init.x + init.width * (thiss.last_int) + init.width * 0.5 * (thiss.last_int   ) + init.thickness;
-            let y = init.y;
-            let fromx = x + init.width * 0.85 + init.thickness;
-            let fromy = y + init.height * 0.5
-            let tox = x + init.width + init.width * 0.5 + init.thickness;
+            const {x, y} = thiss.getXY(thiss.last_int, init);
+            let {x: fromx, y: fromy} = thiss.getPointerXY(x, y, init);
+            
+            let tox = x + init.width + init.width * 0.5;
             let toy = y - 20 - init.height * 0.5;
 
             d.drawArrow(fromx, fromy, tox, toy, "white", thiss.myGameArea);
@@ -108,21 +107,5 @@ export class InsertBefore extends Controller {
         }
 
         return log;
-    }
-
-    once(obj, name="firstTime", fnc1) {
-        if (obj[name]) {
-            obj[name] = false;
-            return fnc1();
-        }
-    }
-    
-    getXY(i, start) {
-        let block = start.x + start.width;
-        let pointer = start.width * 0.5;
-
-        let x = block * i + pointer * i + start.thickness;
-        let y = start.y;
-        return {x, y};
     }
 }

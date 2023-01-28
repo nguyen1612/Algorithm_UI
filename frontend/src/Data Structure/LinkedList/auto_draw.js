@@ -7,10 +7,13 @@ export class Auto {
     }
 
     // Create Node UI
-    nodes(array, shift={from: 0, n: 0}, noPointer=[]) {
+    nodes(array, shift={from: 0, n: 0}, noPointer=[], noNode=[]) {
         const init = this.config.node_init;
 
         array.forEach((value, i) => {
+            if (noNode.includes(i))
+                return;
+
             let customPointer = false;
             let block = init.x + init.width;
             let pointer = init.width * 0.5;
@@ -39,7 +42,7 @@ export class Auto {
         })
     }
 
-    control_node(i=0, shift={from: 0, n: 0}, text="NULL", under = false) {
+    control_node(i=0, shift={from: 0, n: 0}, text="NULL", under = false, factor={x: 0, y: 0}) {
         const init = this.config.node_init;
         const head = init.head;
         let block = head.x + head.width;
@@ -48,20 +51,20 @@ export class Auto {
         if (i >= shift.from && shift.from !== 0)
             i += shift.n;
 
-        let x = block * i + pointer * i + init.thickness;
-        let text_x = x + head.width * 0.55 - init.thickness;
-        let text_y = init.y;
+        let x = block * i + pointer * i + init.thickness + factor.x;
+        let text_x = x + head.width * 0.55 - init.thickness + factor.x;
+        let text_y = init.y + factor.y;
 
-        let arrow_x = text_x;
+        let arrow_x = text_x + factor.x;
         let arrow_y = text_y;
-        let arrow_toY = init.y;
+        let arrow_toY = init.y + factor.y*2;
 
-        let rect_y = init.y;
+        let rect_y = init.y + factor.y;
 
         // Change position either under or upper node (like Head, Tail, Current node)
         if (under) {
-            rect_y = rect_y * 2 - 20;
             text_y *= 2;
+            rect_y = text_y - 20;
             arrow_y = text_y - 15;
             arrow_toY += init.height
         } else {
@@ -70,7 +73,7 @@ export class Auto {
             arrow_y = text_y + 5;
         }
 
-        d.draw_rectangle(x, rect_y + 5, head.width, head.height / 2 ,this.myGameArea);
+        d.draw_rectangle(x, rect_y + 5, head.width, head.height/2, this.myGameArea);
         d.drawText(text_x, text_y, text, "16px Arial", "white", this.myGameArea);
         d.drawArrow(arrow_x, arrow_y, arrow_x, arrow_toY, "white", this.myGameArea);
     }

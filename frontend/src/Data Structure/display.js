@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import LinkedList from './LinkedList/algo_animation/linkedlist.js';
+import LinkedList from './LinkedList/algo_animation/index';
 
 function Display(props) {
     let {config} = props;

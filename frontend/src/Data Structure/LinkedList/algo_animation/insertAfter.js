@@ -21,7 +21,7 @@ export default class InsertAfter extends Controller {
         this.log = this.getLog();
     }
 
-    insert() {
+    render() {
         const array = this.params.array;
         const c = this.config;
         const auto_draw = this.auto_draw;
@@ -44,12 +44,10 @@ export default class InsertAfter extends Controller {
         d.drawText(x + 30, init.y + init.height * 0.725, "NULL", "20px Arial", "#F4468E", this.myGameArea)
 
         this._controller();
-        // this.changeUI(c);
-
-        this.render();
+        this.effects();
     }
 
-    render() {
+    effects() {
         if (!Number.isInteger(this.path[this.i])) {
             this.once(this.config, "firstTime", () => this.last_int = this.i - 1);
             
@@ -93,10 +91,10 @@ export default class InsertAfter extends Controller {
         }
 
         log[3] = function(thiss) {
-            let x = init.x + init.width * (thiss.last_int) + init.width * 0.5 * (thiss.last_int   ) + init.thickness;
-            let y = init.y;
-            let fromx = x + init.width * 0.85 + init.thickness;
-            let fromy = y + init.height * 0.5
+            const {x, y} = thiss.getXY(thiss.last_int, init);
+            let {x: fromx, y: fromy} = thiss.getPointerXY(x, y, init);
+            
+            fromy += init.thickness;
             let tox = x + init.width + init.width * 0.5 + init.thickness;
             let toy = y - 20 - init.height * 0.5;
 
@@ -112,21 +110,5 @@ export default class InsertAfter extends Controller {
         }
 
         return log;
-    }
-
-    once(obj, name="firstTime", fnc1) {
-        if (obj[name]) {
-            obj[name] = false;
-            return fnc1();
-        }
-    }
-
-    getXY(i, start) {
-        let block = start.x + start.width;
-        let pointer = start.width * 0.5;
-
-        let x = block * i + pointer * i + start.thickness;
-        let y = start.y;
-        return {x, y};
     }
 }

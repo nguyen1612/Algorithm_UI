@@ -11,7 +11,7 @@ export default class Search extends Controller {
         this.shiftRight = this.noShift;
     }
 
-    search(type) {
+    render() {
         const config = this.config;
         const init = config.node_init;
         const auto_draw = this.auto_draw;
@@ -35,10 +35,10 @@ export default class Search extends Controller {
         this._controller();
     
         // Change UI according to the problem
-        this.changeUI(type);
+        this.effects();
     }
     
-    changeUI(type) {
+    effects() {
         const c = this.config;
 
         if(!c.display)
