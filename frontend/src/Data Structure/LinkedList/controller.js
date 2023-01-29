@@ -177,7 +177,7 @@ function Setting(props) {
         
         <div>
             <label htmlFor="max_len">Max Length Array: </label>
-            <input type="number" className="input-not-allow" id="max_len" value={7} readOnly disabled max="6"/>
+            <input type="number" className="input-not-allow fixed" id="max_len" value={7} readOnly disabled max="6"/>
         </div>
 
         <div>
@@ -203,12 +203,12 @@ function Setting(props) {
             <div className="flex-col">
                 <div>
                     <label>Value: </label>
-                    <input type="number" className="input-1" placeholder='Ex: 1' maxLength={2} max={9} min="0" name="current_value"
+                    <input type="number" className="input-1 fixed" placeholder='Ex: 1' maxLength={2} max={9} min="0" name="current_value"
                             onChange={handleValue} value={param.current_value}/>
                 </div>
                 <div>
                     <label>New Value: </label>
-                    <input type="text" className="input-1 success" placeholder='Ex: A10' maxLength={4} name="new_value"
+                    <input type="text" className="input-1 success fixed" placeholder='Ex: A10' maxLength={4} name="new_value"
                             onChange={handleValue}/>
                 </div>
             </div>

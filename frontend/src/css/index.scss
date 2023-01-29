@@ -32,6 +32,126 @@ code {
     display: flex;
 }
 
+.search-popup {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.4;
+    background-color: black;
+    z-index: 10;
+}
+.search-wrapper {
+    padding: 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -250px;
+    z-index: 11;
+    background-color: white;
+    border-radius: 4px;
+}
+.search {
+    width: 500px;
+    height: 500px;
+    overflow-y: auto;
+    
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close{
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        overflow: hidden;
+        
+        &::before, &::after {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            top: 50%;
+            left: 0;
+            margin-top: -1px;
+            background: #000;
+        }
+        &::before {
+            transform: rotate(45deg);
+        }
+        &::after {
+            transform: rotate(-45deg);
+        }
+        &.big {
+            transform: scale(3);
+        }
+        &.thick {
+            &::before, &::after {
+                height: 4px;
+            }
+        }
+    }
+}
+
+.data {
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: lightgray;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    .title, .title-head {
+        flex: 67%;
+        height: 100%;
+        padding: 7px 0;
+
+        display: inline-block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        a:hover {
+            color: $hex_9;
+            text-decoration: underline;
+        }
+    }
+    .title-head {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .tags, .tags-head {
+        width: 30%;
+        display: flex;
+    }
+    .tags-head {
+        justify-content: center;
+    }
+}
+
 .icon {
     width: 30px;
     height: 30px;
@@ -43,7 +163,7 @@ code {
     width: 4.5rem;
     background: #E4E9F7;
     padding: 6px 14px;
-    z-index: 99;
+    z-index: 1;
     transition: all 0.5s ease;
 
     .logo_wrapper {
@@ -54,11 +174,11 @@ code {
         position: relative;
 
         .logo_icon {
-            display: none;
+            display: block;
         }
 
         .logo_name {
-            display: none;
+            display: block;
             color: black;
             font-size: 20px;
             font-weight: 600;

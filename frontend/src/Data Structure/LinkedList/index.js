@@ -6,9 +6,14 @@ import Controller from './controller'
 
 function Index() {
     const [data, setData] = useState({});
+    const [render, setRender] = useState(true);
 
     function handleStart(settings) {
-        setData(settings)
+        setData({...settings, render: true})
+    }
+
+    function handleStop() {
+        setRender(prev => !prev);
     }
 
     return <div className='home-section'>
@@ -19,12 +24,14 @@ function Index() {
 
             <div className="controller_speed">
                 {/* <button className="btn-1">{"<"}</button> */}
-                <button className="btn-1">||</button>
+                <button className="btn-1" onClick={handleStop}>
+                    {render ? "||" : ">"}
+                </button>
                 <button className="btn-1">{">"}</button>
             </div>
 
             <canvas id="myCanvas" width="800" height="500">
-                <Display config={data}/>
+                <Display config={data} render={render}/>
             </canvas>
         </main>
         <Controller handleStart={handleStart}/>

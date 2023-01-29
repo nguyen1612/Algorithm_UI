@@ -2,9 +2,10 @@ import {useEffect} from 'react';
 import LinkedList from './LinkedList/algo_animation/index';
 
 function Display(props) {
-    let {config} = props;
+    let {config, render} = props;
 
     useEffect(() => {
+
         var myGameArea = {
             canvas : document.getElementById("myCanvas"),
             key: false,
@@ -15,6 +16,7 @@ function Display(props) {
                 this.prevKey = prevKey;
             },
             start : function() {
+                console.log(this);
                 this.context = this.canvas.getContext("2d");
                 this.interval = setInterval(updateGameArea, 20);
                 window.addEventListener('keydown', function (e) {
@@ -28,24 +30,29 @@ function Display(props) {
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
             },
         }
-
+    
         function updateGameArea() {
             myGameArea.clear();
             nodeUI.update();
         }
-        
-        const nodeUI = new display(myGameArea);
-        console.log(config);
 
-        if (!config.reset)
+        if (!config.reset) {
             myGameArea.start();
+            // if (!render) {
+            //     myGameArea.setKey(false, "ArrowDown");
+            // } else {
+            //     myGameArea.setKey(false, "ArrowRight");
+            // }
+        }
+
+        const nodeUI = new display(myGameArea);
         
         return () => {
             if (myGameArea.context)
                 myGameArea.clear();
             clearInterval(myGameArea.interval);
         }
-    }, [config])
+    }, [config, render])
     
     function display(myGameArea) {
         const algorithm = algorithm_factory("LinkedList", {myGameArea, config});

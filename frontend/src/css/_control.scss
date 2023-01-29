@@ -1,6 +1,6 @@
 @import "color";
 .input-1, .input-2, .input-not-allow {
-    max-width: 70px;
+    // max-width: 70px;
     width: 100%;
     padding: 5px 5px 5px 10px;
     height: 2rem;
@@ -9,7 +9,7 @@
 
     outline: none;
     transition: all 0.1s ease-out;
-    color: $hex_9;
+    // color: $hex_9;
     background-color: $grey_1;
     border: 2px solid $grey_1;
     background-clip: padding-box;
@@ -46,6 +46,14 @@
 
 .ipt-required {
     color: red;
+}
+
+.input-not-allow {
+    cursor: not-allowed;
+}
+
+.fixed {
+    max-width: 100px;
 }
 
 

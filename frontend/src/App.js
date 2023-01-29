@@ -1,122 +1,128 @@
-import {useRef} from 'react'
+import {useRef, useState, useEffect} from 'react'
 import Controller from './Data Structure/LinkedList/controller.js';
 import LinkedList from './Data Structure/LinkedList/index.js';
 
 import algo_img from "./icon/algorithm.png"
 
+
 function App() {
-    return <main className="container">
-        <Nav/>
-        <LinkedList/>
-        {/* <Controller/> */}
-    </main>
+
+    const [popup, setPopup] = useState(false);
+
+    function handlePopUp() {
+        setPopup(prev => !prev);
+    }
+
+    return <>
+        <main className="container">
+            <Nav handlePopUp={handlePopUp}/>
+            <LinkedList/>
+            {/* <Controller/> */}
+        </main>
+
+        {popup && <Popup handlePopUp={handlePopUp}/>}
+    </>
 }
 
-function Nav() {
+
+function Popup(props) {
+    const {handlePopUp} = props;
+    const wrapperRef = useRef(null);
+    useOutside(wrapperRef, handlePopUp);
+
+    return <>
+    <div className="search-popup">
+    </div>
+
+    <div className="search-wrapper" ref={wrapperRef}>
+        <div className="search">
+            <div className="title">
+                <h4>Find Something</h4>
+                <span className="close thick" onClick={handlePopUp}></span>
+            </div>
+
+            <div className="block-ipt">
+                <input className="input-1" placeholder=' ' />
+                <button className="btn-1">Search</button>
+            </div>
+
+            <div className="data">
+                <div className="item">
+                    <div className="title-head" style={{"fontWeight": 600}}>
+                        <span>Name</span>
+                    </div>
+                    <div className="tags-head" style={{"fontWeight": 600}}>
+                        <span>Category</span>
+                    </div>
+                </div>
+                <div className="line"></div>
+
+                <Item/>
+                <Item/>
+                <Item/>
+                <Item/>
+                <Item/>
+                <Item/>
+                <Item/>
+            </div>
+        </div>
+    </div>
+    </>
+}
+
+function Item() {
+    return <>
+        <div className="item">
+            <div className="title">
+                <a href="#">Result 1 Result 1 </a>
+            </div>
+            <div className="tags-head">
+                <span>AI</span>
+            </div>
+        </div>
+        <div className="line"></div>
+    </>
+}
+
+function Nav(props) {
+    const {handlePopUp} = props
+
     const sidebar = useRef(null);
-    const btn = useRef(null);
-    const bx_search = useRef(null);
-    const dataStructure = useRef(null);
-    const algorithm = useRef(null);
-
-    function toggleSideBar() {
-        sidebar.current.classList.toggle("open");
-        menuBtnChange();
-    }
-
-    function menuBtnChange() {
-        if (sidebar.current.classList.contains("open")) {
-            btn.current.classList.replace("bx-menu", "bx-menu-alt-right");
-        } else {
-            btn.current.classList.replace("bx-menu-alt-right","bx-menu");
-        }
-    }
-
-    function toggleDropDown(item) {
-        if (item.current.classList.contains("bx-chevron-up")) {
-            item.current.classList.replace("bx-chevron-up", "bx-chevron-down");
-        } else {
-            item.current.classList.replace("bx-chevron-down", "bx-chevron-up");
-        }
-    }
-
 
     return <nav className="sidebar" ref={sidebar}>
         <div className="logo_wrapper">
-            <img src={algo_img} className="icon logo_icon"/>
-            <div className="logo_name">Algorithm UI</div>
-            <i className='bx bx-menu' id="btn" ref={btn} onClick={toggleSideBar}></i>
+            <img src={algo_img} id="btn" className="icon logo_icon"/>
         </div>
 
         <div>
             <ul className="nav-list">
                 <li>
-                    <div className='input-wrap'>
-                        <input type="text" placeholder="Search..." />
-                        <i className='bx bx-search' ref={bx_search} onClick={toggleSideBar}></i>
+                    <div className='input-wrap' onClick={handlePopUp}>
+                        <i className='bx bx-search'></i>
                         <span className="tooltip">Search</span>
                     </div>
                 </li>
-                <li>
-                    <a href="#" onClick={() => toggleDropDown(dataStructure)}>
+                <li onClick={handlePopUp}>
+                    <a href="#">
                         <i className='bx bx-data'></i>
-                        <div className='end_icon'>
-                            <span className="links_name">Data Structure</span>
-                            <i className='bx bx-chevron-up' ref={dataStructure}></i>
-                        </div>
                     </a>
                     <span className="tooltip">Data Structure</span>
-
-                    <ul className="nav-list">
-                        <li>
-                            <a href="#">
-                                <span className="nest_index">1</span>
-                                <span className="links_name">Algorithm Algorithm</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span className="nest_index">2</span>
-                                <span className="links_name">Algorithm</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-                <li>
-                    <a href="#" onClick={() => toggleDropDown(algorithm)}>
+                <li onClick={handlePopUp}>
+                    <a href="#">
                         <i className='bx bx-brain'></i>
-                        <div className='end_icon'>
-                            <span className="links_name">Algorithm</span>
-                            <i className='bx bx-chevron-up' ref={algorithm}></i>
-                        </div>
                     </a>
                     <span className="tooltip">Algorithm</span>
-                    <ul className="nav-list">
-                        <li>
-                            <a href="#">
-                                <span className="nest_index">1</span>
-                                <span className="links_name">Algorithm</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span className="nest_index">2</span>
-                                <span className="links_name">Algorithm</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li>
                     <a href="#">
                         <i className='bx bx-info-circle'></i>
-                        <span className="links_name">Info</span>
                     </a>
                     <span className="tooltip">Info</span>
                 </li>
                 <li>
                     <a href="#">
                         <i className='bx bx-history'></i>
-                        <span className="links_name">Activity</span>
                     </a>
                     <span className="tooltip">Activity</span>
                 </li>
@@ -124,5 +130,20 @@ function Nav() {
         </div>
     </nav>
 }
+
+
+function useOutside(ref, handlePopUp) {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+            handlePopUp();
+        }
+      }
+
+      document.addEventListener("mousedown", handleClickOutside);
+
+      return () =>  document.removeEventListener("mousedown", handleClickOutside);
+    }, [ref]);
+  }
 
 export default App
