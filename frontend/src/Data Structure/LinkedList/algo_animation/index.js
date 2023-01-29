@@ -9,6 +9,7 @@ import RemoveMiddle from "./removeMiddle";
 import RemoveHead from "./removeHead";
 import Test from "./test";
 import RemoveTail from "./removeTail";
+import InsertAfterTail from "./insertAfter_Tail";
 
 
 // This class is only use for error checking and directing algorithm
@@ -21,8 +22,11 @@ export default class LinkedList extends Animation {
     // for directing animation for specific problem and init value;
     _getProblem() {
         this.searchPivot = new Search(this.myGameArea, this.config);
+
         this.insertAfter = new InsertAfter(this.myGameArea, this.config);
+        this.insertAfter_Tail = new InsertAfterTail(this.myGameArea, this.config);
         this.insertBefore = new InsertBefore(this.myGameArea, this.config);
+
         this.removeMiddle = new RemoveMiddle(this.myGameArea, this.config);
         this.removeHead = new RemoveHead(this.myGameArea, this.config);
         this.removeTail = new RemoveTail(this.myGameArea, this.config);
@@ -42,6 +46,13 @@ export default class LinkedList extends Animation {
             this.insertAfter.path = api.insertAfter({array: this.params.array});
             this.insertAfter.params = this.params;
             return this.insert_after;
+        }
+
+        // Insert After Tail
+        if (this.params?.type === type.INSERT_AFTER_TAIL) {
+            this.insertAfter_Tail.path = api.insertAfter_Tail({array: this.params.array});
+            this.insertAfter_Tail.params = this.params;
+            return this.insert_after_tail;
         }
 
         // Insert before
@@ -92,6 +103,9 @@ export default class LinkedList extends Animation {
 
     insert_after() {
         return this.insertAfter.render();
+    }
+    insert_after_tail() {
+        return this.insertAfter_Tail.render();
     }
     insert_before() {
         return this.insertBefore.render();

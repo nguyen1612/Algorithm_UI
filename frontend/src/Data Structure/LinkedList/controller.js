@@ -36,7 +36,7 @@ function Controller(props) {
 
 
 const init = {
-    params: {type: type.SEARCH_PIVOT, index: 4, value: 40, array: [30, 33, 20, 15, 10]},
+    params: {type: type.INSERT_AFTER, index: 4, value: 40, array: [30, 33, 20, 15, 10]},
     node_init: {
         x: 5, y: 75, width: 70, height: 40, thickness: 5,
         head: {

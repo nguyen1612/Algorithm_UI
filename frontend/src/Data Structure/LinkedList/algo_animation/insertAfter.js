@@ -31,7 +31,7 @@ export default class InsertAfter extends Controller {
         // Normal UI flow, may change later
         auto_draw.nodes(array, this.shiftRight, [this.pointer]);
         auto_draw.control_node(c.i, this.noShift, "Current", true);
-        auto_draw.control_node(0, this.noShift, "Tail");
+        auto_draw.control_node(0, this.noShift, "Head");
         auto_draw.control_node(tail, this.shiftRight, "Tail");
 
         // For NULL pointer
