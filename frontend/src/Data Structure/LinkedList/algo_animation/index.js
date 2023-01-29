@@ -4,7 +4,6 @@ import * as type from './TYPE';
 import * as api from './API';
 
 import InsertAfter from "./insertAfter";
-import InsertBefore from "./insertBefore";
 import RemoveMiddle from "./removeMiddle";
 import RemoveHead from "./removeHead";
 import Test from "./test";
@@ -25,7 +24,6 @@ export default class LinkedList extends Animation {
 
         this.insertAfter = new InsertAfter(this.myGameArea, this.config);
         this.insertAfter_Tail = new InsertAfterTail(this.myGameArea, this.config);
-        this.insertBefore = new InsertBefore(this.myGameArea, this.config);
 
         this.removeMiddle = new RemoveMiddle(this.myGameArea, this.config);
         this.removeHead = new RemoveHead(this.myGameArea, this.config);
@@ -53,13 +51,6 @@ export default class LinkedList extends Animation {
             this.insertAfter_Tail.path = api.insertAfter_Tail({array: this.params.array});
             this.insertAfter_Tail.params = this.params;
             return this.insert_after_tail;
-        }
-
-        // Insert before
-        if (this.params?.type === type.INSERT_BEFORE) {
-            this.insertBefore.path = api.insertBefore({array: this.params.array});
-            this.insertBefore.params = this.params;
-            return this.insert_before;
         }
 
         // Remove Head
@@ -106,9 +97,6 @@ export default class LinkedList extends Animation {
     }
     insert_after_tail() {
         return this.insertAfter_Tail.render();
-    }
-    insert_before() {
-        return this.insertBefore.render();
     }
 
     remove_head() {

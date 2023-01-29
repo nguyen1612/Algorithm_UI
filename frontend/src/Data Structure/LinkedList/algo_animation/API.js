@@ -16,13 +16,6 @@ export function insertAfter_Tail(params) {
     return [0, 1, 2, 3, 'new top', 'new to prev.next', "prev to nothing", 'prev to new', "new normal"];
 }
 
-
-export function insertBefore(params) {
-    const {array} = params;
-    
-    return [0, 1, 'new top', 'new to prev.next', "prev to nothing", 'prev to new', "new normal"];
-}
-
 export function removeMiddle(params) {
     const {array} = params;
     

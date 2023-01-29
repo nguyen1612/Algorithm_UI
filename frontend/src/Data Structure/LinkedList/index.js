@@ -5,7 +5,6 @@ import Controller from './controller'
 
 
 function Index() {
-
     const [data, setData] = useState({});
 
     function handleStart(settings) {

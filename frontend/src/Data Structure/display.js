@@ -34,11 +34,15 @@ function Display(props) {
             nodeUI.update();
         }
         
-        myGameArea.start();
-        
         const nodeUI = new display(myGameArea);
+        console.log(config);
 
+        if (!config.reset)
+            myGameArea.start();
+        
         return () => {
+            if (myGameArea.context)
+                myGameArea.clear();
             clearInterval(myGameArea.interval);
         }
     }, [config])
